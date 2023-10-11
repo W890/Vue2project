@@ -22,6 +22,11 @@
             >登录</el-button
           >
         </el-form-item>
+        <el-form-item label-width="0">
+          <el-button class="login-button" type="primary" @click="reset()"
+            >重置</el-button
+          >
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -32,7 +37,10 @@ import { Login } from "@/api/user";
 export default {
   data() {
     return {
-      form: {},
+      form: {
+        username:'admin',
+        password:'123456'
+      },
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -51,13 +59,25 @@ export default {
         console.log(valid);
         if (valid) {
           let res = await Login(this.form);
+          // 验证是否登录成功
+          if (res.meta.status!=200) return this.$message.error(res.meta.msg)
           this.$message.success('登陆成功');
+          // 如果登录成功需要将用户信息和token存在缓存中
+          localStorage.setItem('username',res.data.username)
+          localStorage.setItem('token',res.data.token)
+          // 成功后跳转到系统内部
+          this.$router.push('/')
+      
         }else{
           this.$message.error('请填写必填项');
         }
 
       })
     },
+    // 重置
+    reset(){
+      this.$refs['loginref'].resetFields()
+    }
   },
 };
 </script>
