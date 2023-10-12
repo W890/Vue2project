@@ -30,7 +30,6 @@
    
   </div>
 </template>
-
 <script>
 import { GetMenusList } from '@/api/user';
 export default {
@@ -65,22 +64,19 @@ export default {
 </script>
 
 <style scoped lang="less">
-.homm-header {
+.homm-header{
   height: 5vh;
-  background-color: #0adceb;
+  background-color: #0b06696f;
   line-height: 60px;
 }
-
-.home-contan {
+.home-contan{
   height: 90.8vh;
 }
-
-.el-aside {
-  background: #545c64;
+.el-aside{
+  background:#545c64 ;
   overflow: visible;
 }
-
-.el-menu-vertical-demo {
+.el-menu-vertical-demo{
   width: 100%;
 }
 </style>

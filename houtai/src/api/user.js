@@ -34,6 +34,41 @@ export const GetUsersList = (params)=>{
         params
     })
 }
+// 获取单条用户信息
+export const GetOneUsers = (id)=>{
+    return axios.request({
+        // 请求地址
+        url:'/users/'+id,
+        // 请求方式
+        method:'get',
+        // get请求要使用params 来进行传参
+        // post请求用data
+       
+    })
+}
+// 修改单条用户信息
+export const EditUsers = (data)=>{
+    return axios.request({
+        // 请求地址
+        url:'/users/'+data.id,
+        // 请求方式
+        method:'put',
+        // get请求要使用params 来进行传参
+        // post请求用data
+       data
+    })
+}
+// 修改用户状态
+export const SetUsersType = (data)=>{
+    return axios.request({
+        // 请求地址
+        url:`/users/${data.id}/state/${data.type}`,
+        // 请求方式
+        method:'put',
+        // get请求要使用params 来进行传参
+        // post请求用da
+    })
+}
 // 添加用户
 export const AddUsers = (data)=>{
     return axios.request({

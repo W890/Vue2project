@@ -14,8 +14,12 @@ const routes = [
     },
     children:[
       {
-        path:'/users',
-        component:() => import('../views/User.vue')
+        path: '/users',
+        component: () => import('../views/User.vue')
+      },
+      {
+        path: '/roles',
+        component: () => import('../views/Roles.vue')
       }
     ]
   },
@@ -29,7 +33,6 @@ const routes = [
     name: 'login',
     component: () => import('../views/Login.vue')
   },
-  
 ]
 
 const router = new VueRouter({
