@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <el-container>
-      <el-header class="homm-header"><h1>后台管理系统</h1></el-header>
+      <el-header class="homm-header"><h1>后台管理系统
+        <el-button @click="removetoken()" type="warning" plain>退出登录</el-button>
+      </h1></el-header>
       <el-container class="home-contan">
         <!-- 侧边栏 -->
         <el-aside width="200px">
@@ -20,53 +22,56 @@
         <el-menu-item-group v-for="ited in item.children" :key="ited.id">
           <el-menu-item :index="ited.path" @click="setnav(ited.path)">{{ ited.authName }}</el-menu-item>
         </el-menu-item-group>
-     
+
       </el-submenu>
     </el-menu>
         </el-aside>
         <el-main> <router-view></router-view></el-main>
       </el-container>
     </el-container>
-   
+
   </div>
 </template>
 <script>
-import { GetMenusList } from '@/api/user';
+import { GetMenusList } from '@/api/user'
 export default {
-  name: "HomeView",
+  name: 'HomeView',
   components: {},
-  data() {
+  data () {
     return {
-      menuList:[],
-      active:'' //激活的值
+      menuList: [],
+      active: '' // 激活的值
     }
   },
-  mounted(){
+  mounted () {
     this.getdata()
     // 获取缓存的激活状态
-    this.active = sessionStorage.getItem('active')||''
+    this.active = sessionStorage.getItem('active') || ''
   },
-  methods:{
-    async getdata(){
-        let res = await GetMenusList()
-        if(res.meta.status !=200) return this.$message.error(res.meta.msg)
-        this.menuList = res.data
-        console.log(res);
+  methods: {
+    async getdata () {
+      const res = await GetMenusList()
+      if (res.meta.status != 200) return this.$message.error(res.meta.msg)
+      this.menuList = res.data
+      console.log(res)
     },
     // 设置选中激活状态
-    setnav(path){
+    setnav (path) {
       this.active = path
-      sessionStorage.setItem('active',path)
-
+      sessionStorage.setItem('active', path)
+    },
+    removetoken () {
+      localStorage.clear('token')
+      location.reload()
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">
 .homm-header{
   height: 5vh;
-  background-color: #0b06696f;
+  background-color: #07a8a2;
   line-height: 60px;
 }
 .home-contan{

@@ -33,53 +33,51 @@
 </template>
 <!-- 调用   <mycom></mycom> -->
 <script>
-import { Login } from "@/api/user";
+import { Login } from '@/api/user'
 export default {
-  data() {
+  data () {
     return {
       form: {
-        username:'admin',
-        password:'123456'
+        username: 'admin',
+        password: '123456'
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-        
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-        
-        ],
-      },
-    };
+          { required: true, message: '请输入密码', trigger: 'blur' }
+
+        ]
+      }
+    }
   },
   methods: {
-    async login() {
-      this.$refs['loginref'].validate(async (valid)=>{
-        console.log(valid);
+    async login () {
+      this.$refs.loginref.validate(async (valid) => {
+        console.log(valid)
         if (valid) {
-          let res = await Login(this.form);
+          const res = await Login(this.form)
           // 验证是否登录成功
-          if (res.meta.status!=200) return this.$message.error(res.meta.msg)
-          this.$message.success('登陆成功');
+          if (res.meta.status != 200) return this.$message.error(res.meta.msg)
+          this.$message.success('登陆成功')
           // 如果登录成功需要将用户信息和token存在缓存中
-          localStorage.setItem('username',res.data.username)
-          localStorage.setItem('token',res.data.token)
+          localStorage.setItem('username', res.data.username)
+          localStorage.setItem('token', res.data.token)
           // 成功后跳转到系统内部
           this.$router.push('/')
-      
-        }else{
-          this.$message.error('请填写必填项');
+        } else {
+          this.$message.error('请填写必填项')
         }
-
       })
     },
     // 重置
-    reset(){
-      this.$refs['loginref'].resetFields()
+    reset () {
+      this.$refs.loginref.resetFields()
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped lang="less">
