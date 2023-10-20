@@ -4,25 +4,25 @@
             <br>
             <!-- 查询表单 -->
             <div style="margin-left: 50px;">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form :inline="true" :model="form" class="demo-form-inline">
                     <div class="form-div">
                         <el-form-item>
-                            <el-input v-model="formInline.user" placeholder="请输入发布小区"></el-input>
+                            <el-input v-model="form.communityname" placeholder="请输入发布小区"></el-input>
                         </el-form-item>
                     </div>
                     <div class="form-div">
                         <el-form-item>
-                            <el-input v-model="formInline.user" placeholder="请输入公告主题"></el-input>
+                            <el-input v-model="form.title" placeholder="请输入公告主题"></el-input>
                         </el-form-item>
                     </div>
                     <div class="form-div">
                         <el-form-item>
-                            <el-input v-model="formInline.user" placeholder="请输入发布内容"></el-input>
+                            <el-input v-model="form.content" placeholder="请输入发布内容"></el-input>
                         </el-form-item>
                     </div>
                     <el-form-item>
-                        <el-button type="success" @click="onSubmit">发布公告</el-button>
-                        <el-button type="primary" @click="onSubmit">点击重置</el-button>
+                        <el-button type="success" @click="addlist()">发布公告</el-button>
+                        <el-button type="primary" @click="clear()">点击重置</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -31,13 +31,15 @@
                 <el-tab-pane label="智能设备">
                     <el-table :data="tableData" border style="width: 100%">
                         <el-table-column type="index" label="序号" width="100"></el-table-column>
-                        <el-table-column  prop="communityname" label="公告主题" width="325"></el-table-column>
+                        <el-table-column prop="title" label="公告主题" width="325"></el-table-column>
                         <el-table-column prop="content" label="公告内容" width="650"></el-table-column>
                         <el-table-column prop="createtime" label="发布时间" sortable width="325"></el-table-column>
-                        <el-table-column prop="title" label="小区名称" width="160"></el-table-column>
+                        <el-table-column prop="communityname" label="小区名称" width="160"></el-table-column>
                         <el-table-column label="操作">
-                            <el-button size="mini" type="danger">归档</el-button>
-                            <el-button size="mini" type="primary">查看公告</el-button>
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="danger" @click="delprkdata(scope.row)">归档</el-button>
+                                <el-button size="mini" type="primary">查看公告</el-button>
+                            </template>
                         </el-table-column>
                     </el-table>
                     <!-- 分页器 -->
@@ -53,16 +55,28 @@
     </div>
 </template>
 <script>
-import { GetPostData } from '@/api/house'
+import { GetPostData, AddPoster, DelPoster } from '@/api/house'
 export default {
     data() {
         return {
+            // 添加验证
+            form: {
+                communityname: '',
+                title: '',
+                content: '',
+                token: ''
+            },
+            // 删除验证
+            form1: {
+                p_id: '',
+                token: ''
+            },
             // 表单1数据
             tableData: [],
             //   当前显示的页码
-            userparams: { currPage: 0, pageNum: 10},
+            userparams: { currPage: 0, pageNum: 10 },
             valuetype: true,
-            valuetype2:false,
+            valuetype2: false,
             //   总条数
             total: 0,
             formInline: {
@@ -72,6 +86,8 @@ export default {
         }
     },
     mounted() {
+        this.form.token = localStorage.getItem('token')
+        this.form1.token = localStorage.getItem('token')
         this.getdata()
     },
     methods: {
@@ -82,6 +98,36 @@ export default {
             //   给总条数赋值
             this.total = res.total
             console.log(res);
+        },
+        // 添加
+        async addlist() {
+            const res = await AddPoster(this.form)
+            console.log(res);
+            this.dialogVisible = false
+            this.getdata()
+        },
+        // 删除
+        async delprkdata(row) {
+            this.form1.p_id = row.p_id
+            let res = await DelPoster(this.form1)
+            
+            console.log(res);
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+            this.getdata()
         },
         // 分页方法
         handleSizeChange(val) {
@@ -94,9 +140,10 @@ export default {
             this.userparams.currPage = val
             this.getdata()
         },
-        onSubmit() {
-            console.log('submit!');
-        }
+        // 重置
+        clear() {
+            location.reload()
+        },
     }
 }
 </script>

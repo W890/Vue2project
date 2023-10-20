@@ -173,6 +173,22 @@ const routes = [
           title: '小区群聊'
         },
       },
+      {
+        //personal/joinChat
+        path: '/service/smartRepair',
+        component: () => import('../views/weixiu/WeixiuOne.vue'),
+        meta: {
+          title: '智能设备维修'
+        },
+      },
+      {
+        //service/houseRepair
+        path: '/service/houseRepair',
+        component: () => import('../views/weixiu/WeixiuTwo.vue'),
+        meta: {
+          title: '家居设备维修'
+        },
+      },
     ]
   },
   // 登录路由

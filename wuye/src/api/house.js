@@ -134,6 +134,24 @@ export const GetPostData = (params) => {
     })
 }
 
+// poster/addPoster
+export const AddPoster = (data) => {
+    return axios.request({
+        url: 'poster/addPoster',
+        method: 'post',
+        data
+    })
+}
+
+// poster/delPoster
+export const DelPoster = (params) => {
+    return axios.request({
+        url: 'poster/delPoster',
+        method: 'get',
+        params
+    })
+}
+
 
 // GetUsersByTypeData
 export const GetUsersByTypeData = (params) => {
@@ -177,5 +195,20 @@ export const GetMyId = (data) => {
         url: 'users/getMyId',
         method: 'post',
         data
+    })
+}
+
+
+
+
+// 维修部分
+// one
+
+// GetlogindataData
+export const Weixiuone = (params) => {
+    return axios.request({
+        url: 'poster/getRepairData',
+        method: 'get',
+        params
     })
 }

@@ -196,6 +196,7 @@ export default {
     },
     mounted() {
         this.form3.token = localStorage.getItem('token')
+        this.form4.token = localStorage.getItem('token')
         this.getdata()
     },
     methods: {

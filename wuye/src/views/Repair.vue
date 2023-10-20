@@ -5,13 +5,13 @@
             <el-tabs type="border-card">
             <el-tab-pane label="维修处理">
                 <div class="zim1">
-                    <div style="background-color: #20a0ff;">
+                    <div @click="gotuone()" style="background-color: #20a0ff;">
                         <li>
                             <i class="el-icon-headset"></i>
                         </li>
                         <p>智能设备维修</p>
                     </div>
-                    <div style="background-color: #13ce66;">
+                    <div @click="gototwo()" style="background-color: #13ce66;">
                         <li>
                             <i class="el-icon-office-building"></i>
                         </li>
@@ -24,6 +24,18 @@
         </div>
     </div>
 </template>
+<script>
+    export default{
+        methods:{
+            gotuone(){
+                this.$router.push('/service/smartRepair')
+            },
+            gototwo(){
+                this.$router.push('/service/houseRepair')
+            }
+        }
+    }
+</script>
 <style>
 #repair {
     width: 100%;
