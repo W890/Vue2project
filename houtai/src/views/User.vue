@@ -92,7 +92,7 @@ import {
 import { GetRolesList } from '@/api/roles'
 export default {
   name: 'User',
-  data () {
+  data() {
     const key =
       /1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}/
     const phone = (rule, value, callback) => {
@@ -139,34 +139,34 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     // 获取数据
     this.getdata()
   },
   methods: {
     // 获取列表数据
-    async getdata () {
+    async getdata() {
       const res = await GetUsersList(this.userparams)
       this.tableData = res.data.users;
       //   给总条数赋值
       (this.total = res.data.total),
-      (this.userparams.pagenum = res.data.pagenum)
+        (this.userparams.pagenum = res.data.pagenum)
       console.log(res)
     },
     // 分页方法
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
       this.userparams.pagesize = val
       this.getdata()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       console.log(`当前页: ${val}`)
       this.userparams.pagenum = val
       this.getdata()
     },
 
     //   打开弹窗
-    async openaddview (type, id) {
+    async openaddview(type, id) {
       this.dialogtype = type
       if (!type) {
         // 修改
@@ -176,7 +176,7 @@ export default {
       this.dialogVisible = true
     },
     //   关闭前确认
-    handleClose (done) {
+    handleClose(done) {
       this.$confirm('确认关闭？')
         .then((_) => {
           done()
@@ -184,7 +184,7 @@ export default {
         .catch((_) => { })
     },
     //   添加用户
-    adduser () {
+    adduser() {
       // 前置验证
       this.$refs.addformref.validate(async (v) => {
         if (v) {
@@ -194,7 +194,7 @@ export default {
       })
     },
     // 添加的请求操作
-    async adduserdata () {
+    async adduserdata() {
       const { meta, data } = await AddUsers(this.form)
       if (meta.status == 201) {
         // 代表成功
@@ -206,7 +206,7 @@ export default {
       }
     },
     // 修改的请求操作
-    async edituserdata () {
+    async edituserdata() {
       const { meta, data } = await EditUsers(this.form)
       if (meta.status == 200) {
         // 代表成功
@@ -218,7 +218,7 @@ export default {
       }
     },
     // 关闭弹窗
-    offdialog () {
+    offdialog() {
       // 关闭弹窗
       this.dialogVisible = false
       // 清空数据
@@ -228,12 +228,12 @@ export default {
     },
 
     // 修改用户状态
-    async usertypechange (type, id) {
+    async usertypechange(type, id) {
       const { meta } = await SetUsersType({ type, id })
       if (meta.status != 200) return this.$message.error(meta.msg)
     },
     // 删除操作
-    async handleDelete (index, row) {
+    async handleDelete(index, row) {
       const type = await this.$confirm(
         '此操作将永久删除该用户, 是否继续?',
         '提示',
@@ -254,13 +254,13 @@ export default {
       }
     },
     // 打开分配角色弹窗
-    async setroleopen (id) {
+    async setroleopen(id) {
       this.roledialogVisible = true
       const res = await GetRolesList()
       this.options = res.data
       this.roleform.id = id
     },
-    async setrole () {
+    async setrole() {
       const res = await SetUsersRole(this.roleform)
       console.log(res)
       this.roledialogVisible = false
