@@ -1,6 +1,6 @@
 <template>
     <div id="add">
-        <div class="app">
+        <div class="app1">
 
             <p style="background-color: #f0f0f0;">
             <p style="color: blue;background-color: #ffffff;display: block;
@@ -86,7 +86,7 @@ export default {
     background-color: #f0f0f0;
 }
 
-.app {
+.app1 {
     width: 1800px;
     height: 500px;
     margin: 0 auto;

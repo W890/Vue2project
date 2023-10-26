@@ -24,7 +24,7 @@
                 </el-form>
             </div>
             <!-- 详情页面 -->
-            <el-dialog title="单元详情" :visible.sync="dialogFormVisible2" width="100%">
+            <el-dialog title="单元详情" :visible.sync="dialogFormVisible2" width="50%">
                 <el-form :model="xiang">
                     <el-form-item label="小区名称："><span> {{ xiang.communityname }}</span>
                     </el-form-item>

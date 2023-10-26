@@ -84,7 +84,10 @@
                     </el-table-column>
                     <el-table-column label="通知人" width="100">暂无
                     </el-table-column>
-                    <el-table-column label="状态" width="100">暂无
+                    <el-table-column label="状态" width="100">
+                        <template slot-scope="scope">
+                            {{ scope.row.paystatus == 1 ? '已通知' : '未通知' }}
+                        </template>
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">

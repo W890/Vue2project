@@ -25,6 +25,34 @@
                 </el-form>
             </div>
 
+            <!-- 通知缴费与缴费详情 -->
+            <!-- 1111111111111111 -->
+            <el-dialog title="车位订单通知/详情" :visible.sync="dialogFormVisible3">
+                <el-form :model="form4">
+                    <div class="block">
+                        <p>开始时间</p>
+                        <el-date-picker label="开始时间" v-model="value1" type="date" placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                    <div class="block">
+                        <p>结束时间</p>
+                        <el-date-picker label="结束时间" v-model="value1" type="date" placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                    <el-form-item label="应缴金额" :label-width="formLabelWidth" prop="name">
+                        <el-input v-model="form4.parkpay" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="通知缴费" show-password :label-width="formLabelWidth" prop="pass">
+                        <el-input v-model="form4.parkname" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogFormVisible3 = false">确 定</el-button>
+                </div>
+            </el-dialog>
+            <!-- 222222222222222222222 -->
+            <!-- 列表 -->
             <div style="width: 1425px; height: 680px; margin: 0 auto;">
                 <el-table border :data="tableData" style="width: 100%">
                     <el-table-column type="index" label="序号" width="150"></el-table-column>
@@ -32,13 +60,19 @@
                     <el-table-column prop="parkpay" label="车位金额" width="150"></el-table-column>
                     <el-table-column label="开始时间" width="180">2023.10.16</el-table-column>
                     <el-table-column label="结束时间" width="180">2023.10.26</el-table-column>
-                    <el-table-column width="150">暂无</el-table-column>
-                    <el-table-column label="缴费状态" width="150"><el-switch v-model="value" active-color="#13ce66"
-                            inactive-color="#ff4949">
-                        </el-switch></el-table-column>
+                    <el-table-column label="应缴金额" width="150">暂无</el-table-column>
+                    <el-table-column label="缴费状态" width="200">
+                        <template slot-scope="scope">
+                            <el-switch active-color="#389af9" inactive-color="#dcdfe6" v-model="scope.row.orderstatus"
+                                :active-value="1" :inactive-value="2" active-text="已缴费" inactive-text="未缴费">
+                            </el-switch>
+                        </template>
+                    </el-table-column>
                     <el-table-column label="操作" width="300">
-                        <el-button plain>通知缴费</el-button>
-                        <el-button type="info" plain>缴费详情</el-button>
+                        <template slot-scope="scope">
+                            <el-button size="mini" plain @click="setroleopen(scope.row)">通知缴费</el-button>
+                            <el-button size="mini" type="info" plain @click="setroleopen(scope.row)">缴费详情</el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
                 <!-- 分页器 -->
@@ -61,6 +95,7 @@ export default {
             tableData: [],
             //   总条数
             total: 0,
+            dialogFormVisible3:false,
             // 表单验证
             form: {
                 currPage: 0,
@@ -74,11 +109,15 @@ export default {
                 pageNum: 10,
                 currPage: 0,
             },
+            // 112121212121
+            form4:{},
             formInline: {
                 user: '',
                 region: ''
             },
-            value: 'true'
+            value: 'true',
+            value1: '',
+            value2: '',
         }
     },
     mounted() {
@@ -99,6 +138,11 @@ export default {
             //   给总条数赋值
             this.total = res.total
             console.log(res);
+        },
+        // 详情
+        setroleopen(row) {
+            this.form4 = row
+            this.dialogFormVisible3 = true
         },
         // 分页方法
         handleSizeChange(val) {

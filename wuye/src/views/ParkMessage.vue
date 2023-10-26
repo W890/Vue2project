@@ -94,6 +94,23 @@
                     </span>
                 </el-dialog>
 
+                <!--编辑-->
+                <el-dialog title="用户信息编辑" :visible.sync="dialogFormVisible3">
+                    <el-form :model="form4">
+                        <el-form-item label="车位名称" :label-width="formLabelWidth" prop="name">
+                            <el-input v-model="form4.parkname" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="车位金额" show-password :label-width="formLabelWidth" prop="pass">
+                            <el-input v-model="form4.parkpay" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+                        <el-button type="primary" @click="dialogFormVisible3 = false">确 定</el-button>
+                    </div>
+                </el-dialog>
+
+                <!-- 列表 -->
                 <el-table border :data="tableData" style="width: 100%">
                     <el-table-column type="index" width="150" label="序号" :formatter="formatter">
                     </el-table-column>
@@ -101,18 +118,28 @@
                     </el-table-column>
                     <el-table-column prop="parkpay" label="车位金额" sortable width="180">
                     </el-table-column>
-                    <el-table-column label="车位类型" width="250"><el-switch v-model="value1" active-text="地上"
-                            inactive-text="地下">
-                        </el-switch>
+                    <el-table-column label="车位类型" width="250">
+                        <template slot-scope="scope">
+                            <el-tooltip :content="'parktype: ' + scope.row.parktype" placement="top">
+                                <el-switch v-model="scope.row.parktype" inactive-text="地上" active-text="地下"
+                                    :active-value="1" :inactive-value="2" @change="asd(scope.row)">
+                                </el-switch>
+                            </el-tooltip>
+                        </template>
                     </el-table-column>
-                    <el-table-column label="车位状态" width="250"><el-switch v-model="value1" active-text="未有车"
-                            inactive-text="已有车">
-                        </el-switch>
+                    <el-table-column label="车位状态" width="250">
+                        <template slot-scope="scope">
+                            <el-tooltip :content="'parkstatus: ' + scope.row.parkstatus" placement="top">
+                                <el-switch v-model="scope.row.parkstatus" inactive-text="未有车" active-text="已有车"
+                                    :active-value="1" :inactive-value="2" @change="asd(scope.row)">
+                                </el-switch>
+                            </el-tooltip>
+                        </template>
                     </el-table-column>
                     <el-table-column prop="parkpay" label="操作" width="300">
                         <template slot-scope="scope">
                             <el-button size="mini" @click="dialogVisible1 = true">分配车位</el-button>
-                            <el-button size="mini" type="danger">编辑</el-button>
+                            <el-button size="mini" type="danger" @click="setroleopen(scope.row)">编辑</el-button>
                             <el-button size="mini" type="danger" @click="delprkdata(scope.row)">移除</el-button>
                         </template>
                     </el-table-column>
@@ -137,6 +164,7 @@ export default {
             // 显示与隐藏
             dialogVisible: false,
             dialogVisible1: false,
+            dialogFormVisible3:false,
             //   总条数
             total: 0,
             labelPosition: 'right',
@@ -149,6 +177,8 @@ export default {
                 user: '',
                 region: ''
             },
+            // 编辑
+            formt:{},
             // 表单验证
             form: {
                 currPage: 0,
@@ -202,6 +232,11 @@ export default {
             //   给总条数赋值
             this.total = res.total
             console.log(res);
+        },
+         // 详情
+         setroleopen(row) {
+            this.form4 = row
+            this.dialogFormVisible3 = true
         },
         // 查询
         async search() {
@@ -269,8 +304,8 @@ export default {
                 .catch(_ => { });
         },
         handleSelectionChange(val) {
-        this.multipleSelection = val;
-      }
+            this.multipleSelection = val;
+        }
     }
 }
 </script>

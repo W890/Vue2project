@@ -43,9 +43,18 @@
                         <el-table-column label="Wi-Fi" width="160"></el-table-column>
                         <el-table-column label="洗衣机" width="160"></el-table-column>
                         <el-table-column prop="createtime" label="授予时间" width="220"></el-table-column>
-                        <el-table-column prop="name" label="状态" width="180"></el-table-column>
-                        <el-table-column label="操作状态"><el-switch v-model="valuetype">
-                            </el-switch></el-table-column>
+                        <el-table-column prop="name" label="状态" width="180">
+                            <template slot-scope="scope">
+                                {{ scope.row.smartstatus == 1 ? '完好' : '待维修' }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作状态">
+                            <template slot-scope="scope">
+                                <el-switch active-color="#389af9" inactive-color="#dcdfe6" v-model="scope.row.smartstatus"
+                                    :active-value="1" :inactive-value="2">
+                                </el-switch>
+                            </template>
+                        </el-table-column>
                     </el-table>
                     <!-- 分页器 -->
                     <div>
@@ -66,13 +75,17 @@
                         <el-table-column label="椅子" width="160"></el-table-column>
                         <el-table-column label="衣柜" width="160"></el-table-column>
                         <el-table-column prop="createtime" label="授予时间" width="220"></el-table-column>
-                        <el-table-column prop="name" label="状态" width="180"></el-table-column>
+                        <el-table-column prop="name" label="状态" width="180">
+                            <template slot-scope="scope">
+                                {{ scope.row.smartstatus == 1 ? '完好' : '待维修' }}
+                            </template>
+                        </el-table-column>
                         <el-table-column label="操作状态">
-                            <el-switch v-model="valuetype2"></el-switch>
-                            <!-- <template slot-scope="scope">
-                                <el-switch v-if="scope.row.homestatus == 1" v-model="valuetype2"></el-switch>
-                                <el-switch v-if="scope.row.homestatus == 2" v-model="valuetype2"></el-switch>
-                            </template> -->
+                            <template slot-scope="scope">
+                                <el-switch active-color="#389af9" inactive-color="#dcdfe6" v-model="scope.row.smartstatus"
+                                    :active-value="1" :inactive-value="2">
+                                </el-switch>
+                            </template>
                         </el-table-column>
                     </el-table>
                     <!-- 分页器 -->

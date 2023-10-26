@@ -19,28 +19,28 @@
         <div class="div1">
           <i class="el-icon-s-custom"></i>
           <div>
-            <p class="kuai-p1">30</p>
+            <p class="kuai-p1">666</p>
             <p>系统用户数</p>
           </div>
         </div>
         <div class="div1">
           <i class="el-icon-document"></i>
           <div>
-            <p class="kuai-p1">82</p>
+            <p class="kuai-p1">666</p>
             <p>计费订单数量</p>
           </div>
         </div>
         <div class="div1">
           <i class="el-icon-truck"></i>
           <div>
-            <p class="kuai-p1">189</p>
+            <p class="kuai-p1">666</p>
             <p>车位总量</p>
           </div>
         </div>
         <div class="div1">
           <i class="el-icon-edit-outline"></i>
           <div>
-            <p class="kuai-p1">0</p>
+            <p class="kuai-p1">666</p>
             <p>用户反馈数量</p>
           </div>
         </div>

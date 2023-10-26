@@ -26,6 +26,33 @@
                     </el-form-item>
                 </el-form>
             </div>
+
+            <!-- 查看详情 -->
+            <el-dialog title="公告详情" :visible.sync="dialogFormVisible3">
+                <el-form :model="tableData2">
+                    <el-form-item :disabled="true" label="小区名称" :label-width="formLabelWidth" prop="name">
+                        <el-input :disabled="true" v-model="tableData2.communityname" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item :disabled="true" label="发布时间" :label-width="formLabelWidth" prop="name">
+                        <el-date-picker v-model="tableData2.createtime" type="date" placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item :disabled="true" label="公告主题" :label-width="formLabelWidth" prop="name">
+                        <el-input :disabled="true" v-model="tableData2.title" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item :disabled="true" label="公告内容">
+                        <el-input type="textarea" :rows="4" :disabled="true" v-model="tableData2.content">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item :disabled="true" label="公告状态" :label-width="formLabelWidth" prop="name">
+                        <el-button disabled>阅读量</el-button>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible3 = false">关闭</el-button>
+                </div>
+            </el-dialog>
+
             <el-tabs type="border-card">
                 <!-- 表一 -->
                 <el-tab-pane label="智能设备">
@@ -38,7 +65,7 @@
                         <el-table-column label="操作">
                             <template slot-scope="scope">
                                 <el-button size="mini" type="danger" @click="delprkdata(scope.row)">归档</el-button>
-                                <el-button size="mini" type="primary">查看公告</el-button>
+                                <el-button size="mini" type="primary" @click="setroleopen(scope.row)">查看公告</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -73,6 +100,10 @@ export default {
             },
             // 表单1数据
             tableData: [],
+            // 查看更多数据/显示与隐藏
+            tableData2: [],
+            dialogFormVisible3:false,
+            formLabelWidth: '120px',
             //   当前显示的页码
             userparams: { currPage: 0, pageNum: 10 },
             valuetype: true,
@@ -110,7 +141,7 @@ export default {
         async delprkdata(row) {
             this.form1.p_id = row.p_id
             let res = await DelPoster(this.form1)
-            
+
             console.log(res);
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -129,6 +160,13 @@ export default {
             });
             this.getdata()
         },
+        // 查看公告
+        setroleopen(row) {
+            console.log(row);
+            this.tableData2 = row
+            this.dialogFormVisible3 = true
+        },
+
         // 分页方法
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`)

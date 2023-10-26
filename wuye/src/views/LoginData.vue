@@ -35,7 +35,11 @@
                     <el-table :data="tableData" align="center" style="width: 100%">
                         <el-table-column type="index" label="序号" width="150"></el-table-column>
                         <el-table-column prop="username" label="登录账号" width="300"></el-table-column>
-                        <el-table-column label="角色类型" width="300">管理员</el-table-column>
+                        <el-table-column label="角色类型" width="300">
+                            <template slot-scope="scope">
+                                {{ scope.row.type == 1 ? '管理员' : '普通住户' }}
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="email" label="邮箱" width="300"></el-table-column>
                         <el-table-column prop="createtime" label="登录时间" width="400"></el-table-column>
                         <el-table-column label="操作">

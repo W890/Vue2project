@@ -115,6 +115,31 @@ export const DelCostData = (params) => {
     })
 }
 
+// 数据查询
+export const GetUserByTypeChar = (params) => {
+    return axios.request({
+        url: 'admin/getUserByTypeChar',
+        method: 'get',
+        params
+    })
+}
+
+// 数据查询
+export const GetUserdata = (params) => {
+    return axios.request({
+        url: 'admin/getUserData',
+        method: 'get',
+        params
+    })
+}
+// 数据s删除
+export const DelUsersData = (params) => {
+    return axios.request({
+        url: 'users/delUserData',
+        method: 'get',
+        params
+    })
+}
 
 // paymessage数据
 export const GetMessageData = (params) => {
@@ -151,6 +176,18 @@ export const DelPoster = (params) => {
         params
     })
 }
+
+//新增用户
+export const Adduserdata  = ( data) => {
+    return axios.request({
+      // 请求地址
+      url: 'users/addUserData',
+      // 请求方式
+      method: 'post',
+       data
+    })
+  }
+  
 
 
 // GetUsersByTypeData
